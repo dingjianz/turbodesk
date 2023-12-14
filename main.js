@@ -5,20 +5,25 @@ const path = require("node:path");
 function createWindow() {
   // Create the browser window.
   let mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1000,
+    height: 1000,
     show: false,
     x: 100,
     y: 20,
-    maxHeight: 1000,
-    maxWidth: 1000,
+    // frame: true,  // 用于自定义menu，设置为false可以将默认的菜单栏隐藏
+    autoHideMenuBar: true,
+    // transparent: true,
+    maxHeight: '100vh',
+    maxWidth: '100vw',
     minWidth: 300,
     minHeight: 300,
     resizable: true, // default true
-    title: '智文',
+    title: '讯飞智文',
     icon: 'favicon.ico',
     webPreferences: {
-      preload: path.join(__dirname, "preload.js"),
+      nodeIntegration: true,
+      contextIsolation: false
+      // preload: path.join(__dirname, "preload.js"),
     },
   });
 

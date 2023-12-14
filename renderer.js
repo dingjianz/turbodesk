@@ -5,3 +5,13 @@
  * `contextIsolation` is turned on. Use the contextBridge API in `preload.js`
  * to expose Node.js functionality from the main process.
  */
+
+const { remote }  = require('electron');
+
+window.addEventListener('DOMContentLoaded', () => {
+  const oBnt = document.getElementById('btn')
+  oBnt.addEventListener('click', () => {
+    // 如何创建新窗口
+
+  })
+})
