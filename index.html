@@ -2,13 +2,13 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'">
     <link href="./styles.css" rel="stylesheet">
   </head>
   <body>
     <h1>Hello World!</h1>
-    <button id="btn">点击打开新窗口</button>
+    <input type="range" name="range" min="0" max="10" style="-webkit-app-region:no-drag;">
+    <button id="btn">点击</button>
     <script src="./renderer.js"></script>
   </body>
 </html>

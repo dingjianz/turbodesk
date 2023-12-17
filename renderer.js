@@ -6,12 +6,10 @@
  * to expose Node.js functionality from the main process.
  */
 
-const { remote }  = require('electron');
-
-window.addEventListener('DOMContentLoaded', () => {
-  const oBnt = document.getElementById('btn')
-  oBnt.addEventListener('click', () => {
+window.addEventListener("DOMContentLoaded", () => {
+  const oBnt = document.getElementById("btn");
+  oBnt.addEventListener("click", async () => {
     // 如何创建新窗口
-
-  })
-})
+    myApi.handleSendEvent();
+  });
+});
