@@ -2,11 +2,14 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'">
+    <meta http-equiv="Content-Security-Policy" content="default-src *; script-src 'self'; style-src 'self' 'unsafe-inline'">
     <link href="./styles.css" rel="stylesheet">
   </head>
   <body>
     <h1>Hello World!</h1>
+    <div>
+      <img src="https://placekitten.com/500/500" alt="">
+    </div>
     <input type="range" name="range" min="0" max="10" style="-webkit-app-region:no-drag;">
     <button id="btn">点击</button>
     <script src="./renderer.js"></script>
