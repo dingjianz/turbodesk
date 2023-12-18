@@ -5,6 +5,12 @@ html {
 body {
   height: 100%;
   /* user-select: none; */
-  -webkit-app-region: drag;
-  background-color: orange;
+  /* -webkit-app-region: drag; */
+  /* background-color: orange; */
+}
+
+#img {
+  width: 60px;
+  height: 60px;
+  display: block;
 }

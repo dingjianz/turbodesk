@@ -12,4 +12,22 @@ window.addEventListener("DOMContentLoaded", () => {
     // 如何创建新窗口
     myApi.handleSendEvent();
   });
+
+  document.querySelector("#btn2").addEventListener("click", () => {
+    myApi.copy("hello world");
+  });
+
+  document.querySelector("#btn3").addEventListener("click", () => {
+    myApi.show();
+  });
+
+  document.querySelector("#btn4").addEventListener("click", async () => {
+    const imgUrl = await myApi.capture();
+    console.log(imgUrl);
+    document.querySelector("#img").src = imgUrl;
+  });
+
+  document.querySelector("#btn5").addEventListener("click", async () => {
+    myApi.testNativeImage();
+  });
 });

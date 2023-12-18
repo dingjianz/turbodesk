@@ -1,7 +1,8 @@
 // Modules to control application life and create native browser window
 const path = require("node:path");
-const { app, BrowserWindow, ipcMain, dialog, globalShortcut, Menu } = require("electron");
+const { app, BrowserWindow, ipcMain, dialog, globalShortcut, Menu, clipboard, desktopCapturer } = require("electron");
 const WinState = require("electron-win-state").default;
+const createTray = require("./tray");
 
 const winState = new WinState({
   defaultWidth: 800,
@@ -24,13 +25,14 @@ const menu = Menu.buildFromTemplate([
   },
 ]);
 
-const contextMenu =  Menu.buildFromTemplate([
+const contextMenu = Menu.buildFromTemplate([
   {
-    label: 'item 1'
-  }, {
-    role: 'editMenu'
-  }
-])
+    label: "item 1",
+  },
+  {
+    role: "editMenu",
+  },
+]);
 
 function createWindow() {
   // Create the browser window.
@@ -73,7 +75,7 @@ function createWindow() {
   });
 
   const wc = mainWindow.webContents;
-  // wc.openDevTools();
+  wc.openDevTools();
   wc.on("dom-ready", (event) => {
     // const choice = dialog.showMessageBoxSync(mainWindow, {
     //   type: 'question',
@@ -107,19 +109,24 @@ function createWindow() {
     contextMenu.popup();
   });
 
-  // 注册一个'CommandOrControl+X' 快捷键监听器
-  const ret = globalShortcut.register("CommandOrControl+X", () => {
-    console.log("CommandOrControl+X is pressed");
-    globalShortcut.unregister("CommandOrControl+X");
+  globalShortcut.register("f5", () => {
+    mainWindow.reload();
   });
-  if (!ret) {
-    console.log("registration failed");
-  }
-  // 检查快捷键是否注册成功
-  console.log(globalShortcut.isRegistered("CommandOrControl+X"));
 
+  // // 注册一个'CommandOrControl+X' 快捷键监听器
+  // const ret = globalShortcut.register("CommandOrControl+X", () => {
+  //   console.log("CommandOrControl+X is pressed");
+  //   globalShortcut.unregister("CommandOrControl+X");
+  // });
+  // if (!ret) {
+  //   console.log("registration failed");
+  // }
+  // 检查快捷键是否注册成功
+  // console.log(globalShortcut.isRegistered("CommandOrControl+X"));
 
   Menu.setApplicationMenu(menu);
+
+  // createTray(app, mainWindow); // 创建托盘
   // const wind2 = new BrowserWindow({
   //   width: 600,
   //   height: 400,
@@ -129,6 +136,8 @@ function createWindow() {
 
   // wind2.loadURL('https://www.baidu.com');
   // winState.manage(mainWindow)
+
+  // process.env["ELECTRON_ENABLE_SECURITY_WARNINGS"] = "true";
 }
 
 app.whenReady().then(() => {
@@ -169,4 +178,19 @@ app.on("browser-window-focus", () => {
 ipcMain.handle("send-event", (event, msg) => {
   console.log("handle", msg);
   return msg;
+});
+
+ipcMain.handle("copy-event", (event, msg) => {
+  clipboard.writeText(msg);
+});
+
+ipcMain.handle("show-event", () => {
+  return clipboard.readText();
+});
+
+ipcMain.handle("capture-event", () => {
+  return desktopCapturer.getSources({ types: ["window", "screen"] }).then((result) => {
+    const source = result?.find((item) => item.name === "屏幕 2");
+    return source;
+  });
 });
